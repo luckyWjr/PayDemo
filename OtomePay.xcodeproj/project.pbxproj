@@ -1,0 +1,267 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		736E56FC1D40ACAB003CB116 /* OtomePay.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 736E56FB1D40ACAB003CB116 /* OtomePay.h */; };
+		736E56FE1D40ACAB003CB116 /* OtomePay.m in Sources */ = {isa = PBXBuildFile; fileRef = 736E56FD1D40ACAB003CB116 /* OtomePay.m */; };
+		736E57051D40B0E5003CB116 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736E57041D40B0E5003CB116 /* StoreKit.framework */; };
+		73F457F41D41C0510010C2B3 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F457F31D41C0510010C2B3 /* Reachability.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		736E56F61D40ACAB003CB116 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				736E56FC1D40ACAB003CB116 /* OtomePay.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		736E56F81D40ACAB003CB116 /* libOtomePay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOtomePay.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		736E56FB1D40ACAB003CB116 /* OtomePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtomePay.h; sourceTree = "<group>"; };
+		736E56FD1D40ACAB003CB116 /* OtomePay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OtomePay.m; sourceTree = "<group>"; };
+		736E57041D40B0E5003CB116 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		73F457F21D41C0510010C2B3 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		73F457F31D41C0510010C2B3 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		736E56F51D40ACAB003CB116 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				736E57051D40B0E5003CB116 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		736E56EF1D40ACAB003CB116 = {
+			isa = PBXGroup;
+			children = (
+				736E57041D40B0E5003CB116 /* StoreKit.framework */,
+				736E56FA1D40ACAB003CB116 /* OtomePay */,
+				736E56F91D40ACAB003CB116 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		736E56F91D40ACAB003CB116 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				736E56F81D40ACAB003CB116 /* libOtomePay.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		736E56FA1D40ACAB003CB116 /* OtomePay */ = {
+			isa = PBXGroup;
+			children = (
+				73F457F21D41C0510010C2B3 /* Reachability.h */,
+				73F457F31D41C0510010C2B3 /* Reachability.m */,
+				736E56FB1D40ACAB003CB116 /* OtomePay.h */,
+				736E56FD1D40ACAB003CB116 /* OtomePay.m */,
+			);
+			path = OtomePay;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		736E56F71D40ACAB003CB116 /* OtomePay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 736E57011D40ACAB003CB116 /* Build configuration list for PBXNativeTarget "OtomePay" */;
+			buildPhases = (
+				736E56F41D40ACAB003CB116 /* Sources */,
+				736E56F51D40ACAB003CB116 /* Frameworks */,
+				736E56F61D40ACAB003CB116 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OtomePay;
+			productName = OtomePay;
+			productReference = 736E56F81D40ACAB003CB116 /* libOtomePay.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		736E56F01D40ACAB003CB116 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = wjr;
+				TargetAttributes = {
+					736E56F71D40ACAB003CB116 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = WLXPANL5K3;
+					};
+				};
+			};
+			buildConfigurationList = 736E56F31D40ACAB003CB116 /* Build configuration list for PBXProject "OtomePay" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 736E56EF1D40ACAB003CB116;
+			productRefGroup = 736E56F91D40ACAB003CB116 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				736E56F71D40ACAB003CB116 /* OtomePay */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		736E56F41D40ACAB003CB116 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				736E56FE1D40ACAB003CB116 /* OtomePay.m in Sources */,
+				73F457F41D41C0510010C2B3 /* Reachability.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		736E56FF1D40ACAB003CB116 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		736E57001D40ACAB003CB116 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		736E57021D40ACAB003CB116 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		736E57031D40ACAB003CB116 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		736E56F31D40ACAB003CB116 /* Build configuration list for PBXProject "OtomePay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				736E56FF1D40ACAB003CB116 /* Debug */,
+				736E57001D40ACAB003CB116 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		736E57011D40ACAB003CB116 /* Build configuration list for PBXNativeTarget "OtomePay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				736E57021D40ACAB003CB116 /* Debug */,
+				736E57031D40ACAB003CB116 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 736E56F01D40ACAB003CB116 /* Project object */;
+}
