@@ -24,8 +24,6 @@ static OtomePay *sharedObj = nil;
 }
 
 @property (nonatomic, copy) NSArray *productsArr;
-@property (nonatomic, assign) NSInteger clientCurrencyType;
-@property (nonatomic, copy) NSDictionary *currencyTypes;
 @property (nonatomic, strong) NSSet *productsIdentifierSet;
 @property (nonatomic, strong) Reachability *reach;
 
@@ -50,33 +48,6 @@ static OtomePay *sharedObj = nil;
         }
         
         self.productsArr = [[NSArray alloc]init];
-        self.currencyTypes=@{@"Unknown":@0,
-                             @"USD":@1,
-                             @"CAD":@2,
-                             @"MXN":@3,
-                             @"AUD":@4,
-                             @"NZD":@5,
-                             @"JPY":@6,
-                             @"CNY":@7,
-                             @"SGD":@8,
-                             @"HKD":@9,
-                             @"TWD":@10,
-                             @"IDR":@11,
-                             @"INR":@12,
-                             @"RUB":@13,
-                             @"TRY":@14,
-                             @"ILS":@15,
-                             @"ZAR":@16,
-                             @"SAR":@17,
-                             @"AED":@18,
-                             @"GBP":@19,
-                             @"DKK":@20,
-                             @"SEK":@21,
-                             @"CHF":@22,
-                             @"NOK":@23,
-                             @"Euro":@24,
-                             @"EUR":@25,
-                             @"Max":@32};
         self.productsIdentifierSet = [NSSet setWithObjects:
                                       PAY_ITEM1,
                                       PAY_ITEM3,
@@ -113,22 +84,8 @@ static OtomePay *sharedObj = nil;
         return NSOrderedSame;
     }]];
     
-    
-    NSString *newCurrencyTypeS=nil;
-    
-    if (products != nil && products.count > 0) {
-        
-        newCurrencyTypeS = [[((SKProduct *)[products objectAtIndex:0]).priceLocale.localeIdentifier componentsSeparatedByString:@"="] objectAtIndex:1];
-        
-        if (nil == [self.currencyTypes valueForKey:newCurrencyTypeS]) {
-            self.clientCurrencyType = 0;
-        }
-        else {
-            self.clientCurrencyType = [[self.currencyTypes valueForKey:newCurrencyTypeS] intValue];
-        }
-        
-        NSLog(@"clientCurrencyType %@", @(self.clientCurrencyType));
-    }
+    NSString* type = [[((SKProduct *)[products objectAtIndex:0]).priceLocale.localeIdentifier componentsSeparatedByString:@"="] objectAtIndex:1];
+    NSLog(@"wjr---type:%@", type);
     
     self.productsArr = products;
     
@@ -172,25 +129,62 @@ static OtomePay *sharedObj = nil;
 #pragma mark - SKPaymentTransactionObserver Methods
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     for (SKPaymentTransaction *transaction in transactions) {
+        NSLog(@"wjr---%@", transaction.transactionIdentifier);
         switch (transaction.transactionState) {
             case SKPaymentTransactionStatePurchased:
+            {
+                NSString *storeTransaction = [transaction.transactionReceipt base64Encoding];
+                NSLog(@"suc---%@", storeTransaction);
+                self.paySuc(storeTransaction);
                 // Item was successfully purchased!
 //                [self completeTransaction:transaction];
                 break;
-                
+            }
             case SKPaymentTransactionStateRestored:
+                NSLog(@"SKPaymentTransactionStateRestored");
                 // Return transaction data. App should provide user with purchased product.
 //                [self restoreTransaction:transaction];
                 break;
                 
             case SKPaymentTransactionStateFailed:
+            {
+                NSLog(@"fail");
+                self.payFail(@"支付失败");
                 // Purchase was either cancelled by user or an error occurred.
 //                [self failedTransaction:transaction];
                 break;
+            }
             default:
                 break;
         }
     }
+}
+
+- (void)pay{
+    if ([SKPaymentQueue canMakePayments]) {
+        if ([self.reach currentReachabilityStatus] != NotReachable) {
+            NSLog(@"wjr---pay");
+            currentProduct=(SKProduct *)[self.productsArr objectAtIndex:0];
+            SKPayment *payment = [SKPayment paymentWithProduct:currentProduct];
+            [[SKPaymentQueue defaultQueue] addPayment:payment];
+        }
+        else {
+            //网络连接失败
+        }
+    }
+    else {
+        //内购被禁用
+    }
+}
+
+// didFinishLaunchingWithOptions
+- (void)addObserver{
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+}
+
+// Called when the application is about to terminate
+- (void)removeObserver{
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
 }
 
 @end
