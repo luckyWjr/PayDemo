@@ -9,13 +9,13 @@
 #import "OtomePay.h"
 #import "Reachability.h"
 
-#define PAY_ITEM1 @"item1"
-#define PAY_ITEM3 @"item3"
-#define PAY_ITEM4 @"item4"
-#define PAY_ITEM5 @"item5"
-#define PAY_ITEM6 @"item6"
-#define PAY_ITEM7 @"item7"
-#define PAY_ITEM8 @"item8"
+#define PAY_ITEM1 @"com.ddianle.otome.item2"
+#define PAY_ITEM3 @"com.ddianle.otome.item3"
+#define PAY_ITEM4 @"com.ddianle.otome.item4"
+#define PAY_ITEM5 @"com.ddianle.otome.item5"
+#define PAY_ITEM6 @"com.ddianle.otome.item6"
+#define PAY_ITEM7 @"com.ddianle.otome.item7"
+#define PAY_ITEM8 @"com.ddianle.otome.item8"
 
 static OtomePay *sharedObj = nil;
 
@@ -67,7 +67,7 @@ static OtomePay *sharedObj = nil;
 #pragma mark -SKProductsRequestDelegate
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
     if ([response.products count] == 0) {
-        self.getProductFail(@"请求产品数据为空！");
+        self.getProductFail(ErrorNoProject);
     }
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
@@ -84,13 +84,12 @@ static OtomePay *sharedObj = nil;
         return NSOrderedSame;
     }]];
     
-    NSString* type = [[((SKProduct *)[products objectAtIndex:0]).priceLocale.localeIdentifier componentsSeparatedByString:@"="] objectAtIndex:1];
-    NSLog(@"wjr---type:%@", type);
+//    NSString* type = [[((SKProduct *)[products objectAtIndex:0]).priceLocale.localeIdentifier componentsSeparatedByString:@"="] objectAtIndex:1];
     
     self.productsArr = products;
     
     if (self.productsArr == nil || self.productsArr.count == 0) {
-        self.getProductFail(@"获取的产品列表为空");
+        self.getProductFail(ErrorNoProject);
     }
     else{
         NSMutableString* msg = [[NSMutableString alloc]init];
@@ -100,7 +99,6 @@ static OtomePay *sharedObj = nil;
             [formatter setLocale:product.priceLocale];
             NSString *product_price = [NSString stringWithFormat:@"%@",[formatter stringFromNumber:product.price]];
             product_price = [product_price stringByReplacingOccurrencesOfString:@" " withString:@""];
-            NSLog(@"wjr-price-%@", product_price);
             
             NSString* eachMsg = [NSString stringWithFormat:@"%@|%@|%@|%@\t", product.productIdentifier, product_price, product.localizedDescription, product.localizedTitle];
             
@@ -116,7 +114,7 @@ static OtomePay *sharedObj = nil;
 
 -(void)getSKProductsWithIdentifier:(NSSet *)identifierSet {
     if ([self.reach currentReachabilityStatus] == NotReachable) {
-        self.getProductFail(@"No internet connection");
+        self.getProductFail(ErrorNoNet);
     }
     else {
         SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:
@@ -129,29 +127,25 @@ static OtomePay *sharedObj = nil;
 #pragma mark - SKPaymentTransactionObserver Methods
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     for (SKPaymentTransaction *transaction in transactions) {
-        NSLog(@"wjr---%@", transaction.transactionIdentifier);
+        NSLog(@"wjr---transaction----%@", transaction.transactionIdentifier);
         switch (transaction.transactionState) {
             case SKPaymentTransactionStatePurchased:
             {
-                NSString *storeTransaction = [transaction.transactionReceipt base64Encoding];
-                NSLog(@"suc---%@", storeTransaction);
-                self.paySuc(storeTransaction);
                 // Item was successfully purchased!
-//                [self completeTransaction:transaction];
+                [self completeTransaction:transaction];
                 break;
             }
-            case SKPaymentTransactionStateRestored:
-                NSLog(@"SKPaymentTransactionStateRestored");
+            case SKPaymentTransactionStateRestored://已经购买过该商品
                 // Return transaction data. App should provide user with purchased product.
-//                [self restoreTransaction:transaction];
+                [self restoreTransaction:transaction];
+                
+            case SKPaymentTransactionStatePurchasing:      //商品添加进列表
                 break;
                 
             case SKPaymentTransactionStateFailed:
             {
-                NSLog(@"fail");
-                self.payFail(@"支付失败");
                 // Purchase was either cancelled by user or an error occurred.
-//                [self failedTransaction:transaction];
+                [self failedTransaction:transaction];
                 break;
             }
             default:
@@ -160,20 +154,57 @@ static OtomePay *sharedObj = nil;
     }
 }
 
-- (void)pay{
+- (void)completeTransaction:(SKPaymentTransaction *)transaction {
+    NSString *storeTransaction = [transaction.transactionReceipt base64Encoding];
+    NSLog(@"wjr---paysuc---%@", storeTransaction);
+    self.paySuc(storeTransaction);
+    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+}
+
+- (void)restoreTransaction:(SKPaymentTransaction *)transaction {
+    
+    NSArray* transactions = [SKPaymentQueue defaultQueue].transactions;
+    if (transactions.count > 0) {
+        //检测是否有未完成的交易
+        SKPaymentTransaction* transaction = [transactions firstObject];
+        if (transaction.transactionState == SKPaymentTransactionStatePurchased) {
+            [self completeTransaction:transaction];
+        }
+    }
+    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+}
+
+- (void)failedTransaction:(SKPaymentTransaction *)transaction {
+    if (transaction.error.code != SKErrorPaymentCancelled) {
+        // Optionally, display an error here.
+    }
+    NSLog(@"wjr---payfail");
+    self.payFail(ErrorPayFail);
+    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+}
+
+- (void)payWithPayId:(NSString*)payId{
     if ([SKPaymentQueue canMakePayments]) {
         if ([self.reach currentReachabilityStatus] != NotReachable) {
-            NSLog(@"wjr---pay");
-            currentProduct=(SKProduct *)[self.productsArr objectAtIndex:0];
-            SKPayment *payment = [SKPayment paymentWithProduct:currentProduct];
-            [[SKPaymentQueue defaultQueue] addPayment:payment];
+            for(SKProduct *project in self.productsArr){
+                if([payId isEqualToString:project.productIdentifier]){
+//                    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+                    NSLog(@"wjr-----payid-----%@", project.productIdentifier);
+                    SKPayment *payment = [SKPayment paymentWithProduct:project];
+                    [[SKPaymentQueue defaultQueue] addPayment:payment];
+                    return;
+                }
+            }
+            self.payFail(ErrorPayIdError);
         }
         else {
             //网络连接失败
+            self.payFail(ErrorNoNet);
         }
     }
     else {
         //内购被禁用
+        self.payFail(ErrorPayUnabel);
     }
 }
 
